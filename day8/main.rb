@@ -19,7 +19,7 @@ puts count
 sum = 0
 input.lines.each do |line|
   intro, signal = line.split(" | ")
-  intro = intro.split(" ").map { |c| c.split("") }.map(&:sort)
+  intro = intro.split(" ").map { |c| c.chars.sort }
   fives = intro.select { |c| c.size == 5 }
   sixes = intro.select { |c| c.size == 6 }
 

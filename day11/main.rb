@@ -17,7 +17,7 @@ end
 
 def each_grid_index(grid)
   grid.each_with_index do |row, y|
-    row.each_with_index do |_, x|
+    row.each_index do |x|
       yield x, y
     end
   end
@@ -27,10 +27,11 @@ flashes = 0
 steps = 0
 
 loop do
-  each_grid_index(grid) { |x, y| grid[y][x] += 1 }
-
   flashed = []
-  each_grid_index(grid) { |x, y| flashed << [x, y] if grid[y][x] > 9 }
+  each_grid_index(grid) do |x, y|
+    grid[y][x] += 1
+    flashed << [x, y] if grid[y][x] > 9
+  end
   flashes += flashed.size
 
   # increase the neighboring cells to all the flashed cells
@@ -51,9 +52,7 @@ loop do
   steps += 1
 
   # part 1
-  if steps == 100
-    puts flashes
-  end
+  puts flashes if steps == 100
 
   # part 2
   if grid.all? { |row| row.all? { |cell| cell == 0 } }
